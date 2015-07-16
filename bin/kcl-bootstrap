@@ -57,6 +57,7 @@ function parseArguments() {
   program
     .option('-p, --properties <properties file>', 'properties file with multi-language daemon options')
     .option('-j, --java [java path]', 'path to java executable - defaults to using JAVA_HOME environment variable to get java path (optional)')
+    .option('-a, --java-args <java args>', 'args to pass directly to the java executable (optional)')
     .option('-c, --jar-path [jar path]', 'path where all multi-language daemon jar files will be downloaded (optional)')
     .option('-e, --execute', 'execute the KCL application')
     .option('--kcl-version', 'specify the version of KCL to download and run')
@@ -65,6 +66,7 @@ function parseArguments() {
   var args = {
     'properties': program.properties,
     'java': (program.java ? program.java : (process.env.JAVA_HOME ? path.join(process.env.JAVA_HOME, 'bin', 'java') : null)),
+    'javaArgs': program.javaArgs || '',
     'jarPath': (program.jarPath ? program.jarPath : DEFAULT_JAR_PATH),
     'execute': program.execute,
     'kclVersion': program.kclVersion || DEFAULT_KCL_VERSION
@@ -94,7 +96,7 @@ function startKinesisClientLibraryApplication(options) {
   var classpath = getClasspath(options).join(getPathDelimiter());
   var java = options.java;
   var args = ['-cp', classpath, MULTI_LANG_DAEMON_CLASS, options.properties];
-  var cmd = java + ' ' + args.join(' ');
+  var cmd = java + ' ' + options.javaArgs + ' ' + args.join(' ');
 
   console.log("==========================================================");
   console.log(cmd);
