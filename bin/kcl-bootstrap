@@ -60,7 +60,7 @@ function parseArguments() {
     .option('-a, --java-args <java args>', 'args to pass directly to the java executable (optional)')
     .option('-c, --jar-path [jar path]', 'path where all multi-language daemon jar files will be downloaded (optional)')
     .option('-e, --execute', 'execute the KCL application')
-    .option('--kcl-version', 'specify the version of KCL to download and run')
+    .option('--kcl-version [kcl version]', 'specify the version of KCL to download and run (optional)')
     .parse(process.argv);
 
   var args = {
